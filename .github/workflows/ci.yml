@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  my-job:
+  job1:
     name: Setup Go 1.16.4 in ubuntu
     runs-on: ubuntu-latest
     steps:
@@ -20,8 +20,10 @@ jobs:
         
     - name: Check Go installation and version
       run: go version
+    
+    - name: Checkout codes
+      uses: actions/checkout@v2.3.4
       
     - name: List folders/files in root folder
       run: |
         ls -lAhFa
-
