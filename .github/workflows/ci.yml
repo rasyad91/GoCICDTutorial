@@ -58,14 +58,15 @@ jobs:
       #run test and converts output to .xml file
       run: |
         go test -v
-        go test -v | go2xunit -output tests.xml
+        go test -v | go2xunit -output report.xml
         ls -lAhFa
 
     - name: Publish Unit Test Results
       uses: EnricoMi/publish-unit-test-result-action@v1
       if: always()
       with:
-        files: tests.xml
+        files: report.xml
+        
     - if: ${{failure()}}
       name: Create Issue Action
       uses: nashmaniac/create-issue-action@v1.1
@@ -80,4 +81,25 @@ jobs:
         assignees: ${{github.actor}}
         # Body of the issue
         body: workflow failed for commit ${{github.sha}}
+        
+    - if: ${{ success() }}
+      name: Create download directory
+      run: mkdir downloads
+      
+    - name: Prepare Documents
+      run: |
+        mv report.xml ./downloads
+        
+    - if: ${{ success() }}
+      name: Prepare artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: assetDocuments
+        path: downloads
+        
+    - if: ${{ success() }}
+      name: Download Content
+      uses: actions/download-artifact@v2
+      with:
+        name: assetDocuments
         
