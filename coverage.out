@@ -1,9 +1,0 @@
-mode: set
-GoMicroservices2/WebServer_Routing/main.go:10.13,12.16 2 0
-GoMicroservices2/WebServer_Routing/main.go:12.16,14.3 1 0
-GoMicroservices2/WebServer_Routing/main.go:17.30,21.2 3 1
-GoMicroservices2/WebServer_Routing/main.go:23.57,25.17 2 1
-GoMicroservices2/WebServer_Routing/main.go:30.2,31.16 2 1
-GoMicroservices2/WebServer_Routing/main.go:36.2,36.24 1 1
-GoMicroservices2/WebServer_Routing/main.go:25.17,28.3 2 1
-GoMicroservices2/WebServer_Routing/main.go:31.16,34.3 2 1
