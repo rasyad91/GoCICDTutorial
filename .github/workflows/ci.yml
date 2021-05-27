@@ -55,6 +55,7 @@ jobs:
     - name: Run test
       #run test and converts output to .xml file
       run: |
+        go test -v
         go test -v | go2xunit -output tests.xml
         ls -lAhFa
 
@@ -63,3 +64,18 @@ jobs:
       if: always()
       with:
         files: tests.xml
+    - if: ${{ failure }}
+      name: Create Issue Action
+      uses: nashmaniac/create-issue-action@v1.1
+      with:
+         # Title of the issue
+        title: Build fail
+        # Token of the user that creates the issue
+        token:  ${{ secrets.GITHUB_token }}
+        # Labels of the issue
+        labels: workflow-failed
+        # Assignees of the issue
+        assignees: $ {{ github.actor }}
+        # Body of the issue
+        body: workflow failed for commit ${{ github.sha }}
+        
