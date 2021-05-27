@@ -22,7 +22,7 @@ jobs:
       run: go version
         
   checkout:
-    name: Checkout files from repo to vm
+    name: Checkout from own repo
     needs: builds
     runs-on: ubuntu-latest
     steps:
@@ -33,18 +33,16 @@ jobs:
         run: |
           ls -lAhFa
 
-  test:
-    name: Test code
+  checkout2:
+    name: Checkout from private repo
     if: success()
     needs: [builds, checkout] 
     runs-on: ubuntu-latest
     steps:
-      - name: mod init
-        run: go mod init CI-tutorial
-      - name: mod tidy
-        run: go mod tidy 
-      - name: run go test 
-        run: |
-          go mod init
-          go test -v
+      - name: Checkout private tools
+        uses: actions/checkout@v2
+        with:
+          repository: lowkh2/GoSchoolRemoteExample
+          token: ${{ secrets.GO_REMOTE_TUTORIAL }} # `GitHub_PAT` is a secret that contains your PAT
+          path: remoteRepo
     
