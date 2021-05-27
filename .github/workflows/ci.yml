@@ -83,6 +83,14 @@ jobs:
         body: workflow failed for commit ${{github.sha}}
         
     - if: ${{ success() }}
+      name: send failure message
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: Fail to push code
+        
+    - if: ${{ success() }}
       name: Create download directory
       run: mkdir downloads
       
@@ -102,4 +110,11 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: assetDocuments
-        
+    
+    - if: ${{ success() }}
+      name: send success message
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: Successfully push code
