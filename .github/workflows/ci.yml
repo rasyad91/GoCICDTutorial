@@ -57,8 +57,8 @@ jobs:
       run: |
         go test -v | go2xunit -output tests.xml
         ls -lAhFa
-        
-    - name: Publish unit test result
+
+    - name: Publish Unit Test Results
       uses: EnricoMi/publish-unit-test-result-action@v1
       if: always()
       with:
