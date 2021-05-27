@@ -39,6 +39,8 @@ jobs:
     needs: [builds, checkout] 
     runs-on: ubuntu-latest
     steps:
+      - name: navigate to root
+        run: cd ~
       - name: run go test 
         run: |
           go test -v
