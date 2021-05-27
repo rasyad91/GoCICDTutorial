@@ -12,4 +12,7 @@ jobs:
     - name: Print a greeting
       run: |
         echo Hello world
+    - name: List folders/files in vm
+      run: |
         ls -lAhFa
+
