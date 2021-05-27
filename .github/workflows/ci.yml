@@ -40,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: mod init
-        run: go mod init
+        run: go mod init CI-tutorial
       - name: mod tidy
         run: go mod tidy 
       - name: run go test 
