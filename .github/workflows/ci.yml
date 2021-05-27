@@ -43,6 +43,11 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: lowkh2/GoSchoolRemoteExample
-          token: ${{ secrets.GO_REMOTE_TUTORIAL }} # `GitHub_PAT` is a secret that contains your PAT
+          token: ${{ secrets.GO_REMOTE_TUTORIAL }} 
           path: remoteRepo
-    
+      - name: Check files
+        run: |
+          ls -lAhFa
+          cd remoteRepo
+          ls -lAhFa
+          cd ..
