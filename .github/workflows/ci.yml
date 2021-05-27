@@ -39,9 +39,12 @@ jobs:
     needs: [builds, checkout] 
     runs-on: ubuntu-latest
     steps:
-      - name: navigate to root
-        run: cd ~
+      - name: mod init
+        run: go mod init
+      - name: mod tidy
+        run: go mod tidy 
       - name: run go test 
         run: |
+          go mod init
           go test -v
     
