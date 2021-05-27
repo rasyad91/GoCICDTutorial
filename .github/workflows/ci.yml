@@ -1,1 +1,14 @@
+name: go setup
 
+on: 
+  push:
+    branches: [main]
+
+jobs:
+  my-job:
+    name: My job
+    runs-on: ubuntu-16.04
+    steps:
+    - name: Print a greeting
+      run: |
+        echo Hello world
