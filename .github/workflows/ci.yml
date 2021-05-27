@@ -15,4 +15,10 @@ jobs:
     - name: List folders/files in vm
       run: |
         ls -lAhFa
+    - name: Setup Go environment
+      uses: actions/setup-go@v2.1.3
+      with: 
+        go-version: 1.16.4
+    - name: Check Go installation and version
+      run: go version
 
