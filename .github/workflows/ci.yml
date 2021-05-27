@@ -82,7 +82,8 @@ jobs:
         # Body of the issue
         body: workflow failed for commit ${{github.sha}}
         
-    - name: send failure message
+    - if: ${{failure()}}
+      name: send failure message
       uses: appleboy/telegram-action@master
       with:
         to: ${{ secrets.TELEGRAM_TO }}
