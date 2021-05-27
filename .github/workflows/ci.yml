@@ -5,36 +5,24 @@ on:
     branches: [main]
 
 jobs:
-  builds:
-    name: Setup Go 1.16.4 in ubuntu
+  helloWorld:
+    name: Hello world eg
     runs-on: ubuntu-latest
     steps:
     - name: Print a greeting
       run: |
         echo Hello world
         
-    - name: Setup Go environment
-      uses: actions/setup-go@v2.1.3
-      with: 
-        go-version: 1.16.4
-        
-    - name: Check Go installation and version
-      run: go version
-        
-    - name: Checkout codes
-      uses: actions/checkout@v2.3.4
-
-    - name: List folders/files in root folder
-      run: |
-        ls -lAhFa
-
+  checkoutPrivate:
+    name: Checkout private repo eg
+    runs-on: ubuntu-latest
+    steps:
     - name: Checkout private tools
       uses: actions/checkout@v2
       with:
         repository: lowkh2/GoSchoolRemoteExample
         token: ${{ secrets.GO_REMOTE_TUTORIAL }} 
-        path: remoteRepo
-        
+        path: remoteRepo   
     - name: Check files
       run: |
         ls -lAhFa
@@ -42,11 +30,36 @@ jobs:
         ls -lAhFa
         cd ..
         
-    - name: Install testing dependencies
+  gotest:
+    name: Testing in vm
+    runs-on: ubuntu-latest
+    steps:   
+    - name: Setup Go environment
+      uses: actions/setup-go@v2.1.3
+      with: 
+        go-version: 1.16.4
+    - name: Check Go installation and version
+      run: go version
+    - name: Checkout codes
+      uses: actions/checkout@v2.3.4
+    - name: List folders/files in root folder
+      run: |
+        ls -lAhFa
+        
+    - name: Install go testing dependencies
       run: |
         go get github.com/franela/goblin
+        go get github.com/tebeka/go2xunit
         go mod tidy
         
     - name: Run test
+      #run test and converts output to .xml file
       run: |
-        go test -v
+        go test -v | go2xunit -output tests.xml
+        ls -lAhFa
+        
+    - name: Publish unit test result
+      uses: EnricoMi/publish-unit-test-result-action@v1
+      if: always()
+      with:
+        files: test-results/**/*.xml
