@@ -21,33 +21,32 @@ jobs:
     - name: Check Go installation and version
       run: go version
         
-  checkout:
-    name: Checkout from own repo
-    needs: builds
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout codes
-        uses: actions/checkout@v2.3.4
-      
-      - name: List folders/files in root folder
-        run: |
-          ls -lAhFa
+    - name: Checkout codes
+      uses: actions/checkout@v2.3.4
 
-  checkout2:
-    name: Checkout from private repo
-    if: success()
-    needs: [builds, checkout] 
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout private tools
-        uses: actions/checkout@v2
-        with:
-          repository: lowkh2/GoSchoolRemoteExample
-          token: ${{ secrets.GO_REMOTE_TUTORIAL }} 
-          path: remoteRepo
-      - name: Check files
-        run: |
-          ls -lAhFa
-          cd remoteRepo
-          ls -lAhFa
-          cd ..
+    - name: List folders/files in root folder
+      run: |
+        ls -lAhFa
+
+    - name: Checkout private tools
+      uses: actions/checkout@v2
+      with:
+        repository: lowkh2/GoSchoolRemoteExample
+        token: ${{ secrets.GO_REMOTE_TUTORIAL }} 
+        path: remoteRepo
+        
+    - name: Check files
+      run: |
+        ls -lAhFa
+        cd remoteRepo
+        ls -lAhFa
+        cd ..
+        
+    - name: Install testing dependencies
+      run: |
+        go get github.com/franela/goblin
+        go mod tidy
+        
+    - name: Run test
+      run: |
+        go test -v
