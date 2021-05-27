@@ -6,19 +6,22 @@ on:
 
 jobs:
   my-job:
-    name: My job
+    name: Setup Go 1.16.4 in ubuntu
     runs-on: ubuntu-latest
     steps:
     - name: Print a greeting
       run: |
         echo Hello world
-    - name: List folders/files in vm
-      run: |
-        ls -lAhFa
+        
     - name: Setup Go environment
       uses: actions/setup-go@v2.1.3
       with: 
         go-version: 1.16.4
+        
     - name: Check Go installation and version
       run: go version
+      
+    - name: List folders/files in root folder
+      run: |
+        ls -lAhFa
 
