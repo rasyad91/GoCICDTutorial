@@ -64,7 +64,7 @@ jobs:
       if: always()
       with:
         files: tests.xml
-    - if: ${{failure}}
+    - if: ${{failure()}}
       name: Create Issue Action
       uses: nashmaniac/create-issue-action@v1.1
       with:
